@@ -1,3 +1,4 @@
+import { ZoomIn } from 'lucide-react';
 import { transform } from 'next/dist/build/swc/generated-native';
 import type { Config } from 'tailwindcss';
 
@@ -54,8 +55,28 @@ export default {
 					'4': 'hsl(var(--chart-4))',
 					'5': 'hsl(var(--chart-5))',
 				},
+				sidebar: {
+					DEFAULT: 'hsl(var(--sidebar-background))',
+					foreground: 'hsl(var(--sidebar-foreground))',
+					primary: 'hsl(var(--sidebar-primary))',
+					'primary-foreground':
+						'hsl(var(--sidebar-primary-foreground))',
+					accent: 'hsl(var(--sidebar-accent))',
+					'accent-foreground':
+						'hsl(var(--sidebar-accent-foreground))',
+					border: 'hsl(var(--sidebar-border))',
+					ring: 'hsl(var(--sidebar-ring))',
+				},
 			},
 			keyframes: {
+				'zoom-in': {
+					'0%': {
+						transform: 'scale3d(0.3, 0.3, 0.3)',
+					},
+					'80%': {
+						transform: 'scale3d(1.1, 1.1, 1.1)',
+					},
+				},
 				dance: {
 					'0% 100%': {
 						transform: 'translateY(-10px)',
@@ -67,6 +88,7 @@ export default {
 			},
 			animation: {
 				dance: 'dance 1s ease-in-out infinite',
+				zoomIn: 'zoom-in 1s ease-in',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

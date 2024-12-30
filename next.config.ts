@@ -1,7 +1,15 @@
-import type { NextConfig } from "next";
-
+import type { NextConfig } from 'next';
+import 'dotenv/config';
 const nextConfig: NextConfig = {
-  /* config options here */
+	async redirects() {
+		return [
+			{
+				source: '/',
+				destination: '/login',
+				permanent: true,
+			},
+		];
+	},
 };
 
 export default nextConfig;
