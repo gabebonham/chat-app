@@ -4,7 +4,7 @@ import Chat from '@/app/_models/ChatModel';
 import UserHasChat from '@/app/_models/UserHasChatModel';
 import User from '@/app/_models/UserModel';
 import { ChatType } from '@/app/_types/ChatType';
-import { login, logoff } from '@/app/login/_services/LoginService';
+import { logoff } from '@/app/login/_services/LoginService';
 
 export async function getUserById(id: string) {
 	const user = await fetch(process.env.BACKEND_URL + '/' + id).then((r) =>

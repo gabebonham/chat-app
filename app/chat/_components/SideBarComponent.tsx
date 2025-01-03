@@ -1,6 +1,4 @@
 'use client';
-import { Calendar, Home, Inbox, Search, Settings } from 'lucide-react';
-
 import {
 	Sidebar,
 	SidebarContent,

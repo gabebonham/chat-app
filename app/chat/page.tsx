@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import { getAllFriends, getUserById } from './_services/ChatService';
 import SideBarComponent from './_components/SideBarComponent';
 import User from '../_models/UserModel';
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { SidebarProvider } from '@/components/ui/sidebar';
 import { UserType } from '../_types/UserType';
 
 export default async function ChatHomePage() {

@@ -1,5 +1,3 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import LoginButton from './_components/LoginButton';
 import { login } from './_services/LoginService';
 import { SignUpPopUp } from './_components/SignUpPopUp';

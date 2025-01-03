@@ -6,11 +6,8 @@ import { ChatType } from '@/app/_types/ChatType';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import User from '@/app/_models/UserModel';
-import { Avatar } from '@/components/ui/avatar';
 import AvatarComponent from './AvatarComponent';
 import { UserType } from '@/app/_types/UserType';
-import { Separator } from '@/components/ui/separator';
 
 export default function ChatModal({
 	initialMessages,

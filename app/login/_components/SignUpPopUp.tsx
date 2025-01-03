@@ -1,5 +1,5 @@
 'use client';
-import { Copy, LoaderIcon } from 'lucide-react';
+import { LoaderIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
