@@ -4,6 +4,7 @@ import Chat from '@/app/_models/ChatModel';
 import UserHasChat from '@/app/_models/UserHasChatModel';
 import User from '@/app/_models/UserModel';
 import { ChatType } from '@/app/_types/ChatType';
+import { login, logoff } from '@/app/login/_services/LoginService';
 
 export async function getUserById(id: string) {
 	const user = await fetch(process.env.BACKEND_URL + '/' + id).then((r) =>
@@ -80,4 +81,7 @@ export async function getAllMessages(usersId: number[]) {
 export async function getUsersChats(userId: number) {
 	const chats = [new UserHasChat(1, 1, 1), new UserHasChat(2, 2, 1)];
 	return chats.filter((c) => c.userId == userId);
+}
+export async function logoffHandler() {
+	await logoff();
 }

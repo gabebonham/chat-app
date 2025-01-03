@@ -21,7 +21,7 @@ export async function login(username: string, password: string) {
 	}
 }
 
-export async function signUp(username: string, password: string) {
+export async function signUp(username: string, password: string, img: string) {
 	await fetch(process.env.BACKEND_URL as string, {
 		method: 'POST',
 		headers: {
@@ -30,7 +30,12 @@ export async function signUp(username: string, password: string) {
 		body: JSON.stringify({
 			username: username,
 			password: password,
+			img: img,
 		}),
 	});
 	return await login(username, password);
+}
+
+export async function logoff() {
+	(await cookies()).delete('user');
 }

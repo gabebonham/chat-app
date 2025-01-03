@@ -24,7 +24,10 @@ export default function FriendButton({
 				onClick={(e) => handler(friend)}
 				className="bg-white py-8 w-56 place-items-start"
 			>
-				<AvatarComponent img={friend.img} />
+				<AvatarComponent
+					addStyle=" "
+					img={friend.img}
+				/>
 				<Label>{friend.username}</Label>
 			</Button>
 		</div>

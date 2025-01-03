@@ -16,10 +16,7 @@ export default async function ChatHomePage() {
 	})) as UserType[];
 	return (
 		<SidebarProvider>
-			<SideBarComponent
-				users={friends}
-				userId={parseInt(userId)}
-			/>
+			<SideBarComponent users={friends} user={user} />
 		</SidebarProvider>
 	);
 }

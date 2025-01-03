@@ -11,48 +11,61 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import Image from 'next/image';
-import User from '@/app/_models/UserModel';
-import AvatarComponent from './AvatarComponent';
 import FriendButton from './FriendButton';
 import { UserType } from '@/app/_types/UserType';
-import { use, useState } from 'react';
-import { getAllMessages } from '../_services/ChatService';
+import { useState } from 'react';
+import { getAllMessages, logoffHandler } from '../_services/ChatService';
 import { ChatType } from '@/app/_types/ChatType';
 import ChatModal from './ChatModal';
-import { Label } from '@radix-ui/react-label';
-import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 export default function SideBarComponent({
 	users,
-	userId,
+	user,
 }: {
 	users: UserType[];
-	userId: number;
+	user: UserType;
 }) {
+	const router = useRouter();
 	const [friendId, setFriendId] = useState<any>();
 	const [messages, setMessages] = useState<ChatType[]>([]);
 	const handler = async (friend: UserType) => {
 		const oldMessages = (await getAllMessages([
-			userId,
+			user.id,
 			parseInt(friend.id.toString()),
 		])) as ChatType[];
 		setMessages(oldMessages);
 		setFriendId(friend.id);
 	};
+	const logoff = async () => {
+		await logoffHandler();
+		router.push('/login');
+	};
 	return (
 		<Sidebar>
-			<SidebarContent>
+			<SidebarContent className="pt-4">
+				<SidebarGroupContent>
+					<SidebarMenu>
+						<SidebarMenuItem className="flex justify-center">
+							<SidebarMenuButton
+								className=" underline w-fit m-0"
+								onClick={logoff}
+							>
+								Logoff
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+					</SidebarMenu>
+				</SidebarGroupContent>
 				<SidebarGroup>
 					<SidebarGroupLabel>
 						Amigos
 					</SidebarGroupLabel>
 					<SidebarGroupContent>
 						<SidebarMenu>
-							{users.map((user) => (
+							{users.map((userf) => (
 								<SidebarMenuItem
 									key={
-										user.id
+										userf.id
 									}
 								>
 									<SidebarMenuButton
@@ -61,15 +74,21 @@ export default function SideBarComponent({
 										<div>
 											<FriendButton
 												friend={
-													user
+													userf
 												}
 												handler={
 													handler
 												}
 											/>
 											{friendId ==
-												user.id && (
+												userf.id && (
 												<ChatModal
+													user={
+														user
+													}
+													friend={
+														userf
+													}
 													initialMessages={
 														messages
 													}

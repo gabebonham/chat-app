@@ -16,38 +16,38 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useRef, useState } from 'react';
 import { signUp } from '../_services/LoginService';
+import { CheckBoxAvatar } from './CheckBoxAvatar';
 
 export function SignUpPopUp() {
 	const usernameRef = useRef<any>(null);
 	const passwordRef = useRef<any>(null);
+	const [img, setImg] = useState<string>();
 	const [isLoading, setIsLoading] = useState(false);
 	const handler = async () => {
 		setIsLoading(true);
 		await signUp(
 			usernameRef.current.value,
 			passwordRef.current.value,
+			img as string,
 		);
 	};
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant="outline">Share</Button>
+				<Button variant="outline">Sign Up</Button>
 			</DialogTrigger>
-			<DialogContent className="sm:max-w-md">
+			<DialogContent className="sm:max-w-md flex justify-center flex-col">
 				<DialogHeader>
-					<DialogTitle>Share link</DialogTitle>
-					<DialogDescription>
-						Anyone who has this link will be
-						able to view this.
-					</DialogDescription>
+					<DialogTitle>Sign Up</DialogTitle>
+					<DialogDescription></DialogDescription>
 				</DialogHeader>
 				<div className="flex items-center space-x-2">
-					<div className="grid flex-1 gap-2">
+					<div className="flex flex-col justify-center flex-1 gap-2">
 						<Label
 							htmlFor="link"
 							className="sr-only"
 						>
-							Link
+							Sign Up
 						</Label>
 						<Input
 							ref={usernameRef}
@@ -61,19 +61,22 @@ export function SignUpPopUp() {
 						<Button
 							onClick={handler}
 							size="sm"
-							className="px-3"
+							className="px-3 flex justify-center"
 						>
 							{isLoading && (
 								<LoaderIcon />
 							)}
+							Sign Up
 						</Button>
 					</div>
 				</div>
+				<CheckBoxAvatar setImg={setImg} />
 				<DialogFooter className="sm:justify-start">
 					<DialogClose asChild>
 						<Button
 							type="button"
 							variant="secondary"
+							className="w-full flex justify-center"
 						>
 							Close
 						</Button>
