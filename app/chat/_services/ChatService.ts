@@ -5,23 +5,9 @@ import UserHasChat from '@/app/_models/UserHasChatModel';
 import User from '@/app/_models/UserModel';
 import { ChatType } from '@/app/_types/ChatType';
 import { logoff } from '@/app/login/_services/LoginService';
+import { cookies } from 'next/headers';
 
-export async function getUserById(id: string) {
-	const user = await fetch(process.env.BACKEND_URL + '/' + id).then((r) =>
-		r.json(),
-	);
-	return user;
-}
-export async function getAllFriends(ids: number[]) {
-	const friends = await Promise.all(
-		ids.map(async (f) => (await getUserById(f.toString())) as User),
-	);
-	return friends;
-}
 export async function getAllMessages(usersId: number[]) {
-	const chatsUser1 = await getUsersChats(usersId[0]);
-	const chatsUser2 = await getUsersChats(usersId[1]);
-	console.log(chatsUser1);
 	const chats = [
 		new Chat(
 			1,
@@ -58,29 +44,56 @@ export async function getAllMessages(usersId: number[]) {
 			2,
 			new Date(),
 		),
-	];
-	const chatUser = chatsUser1.filter(
-		(c) =>
-			chatsUser2.filter((c2) => c2.chatId == c.chatId)
-				.length != 0,
-	);
-	if (chatUser.length == 1) {
-		return chats
-			.filter((c) => c.chatId == chatUser[0].chatId)
-			.map((c) => ({
-				id: c.id,
-				msg: c.msg,
-				userId: c.userId,
-				createdAt: c.createdAt,
-			})) as ChatType[];
-	} else {
-		return [];
-	}
-}
 
-export async function getUsersChats(userId: number) {
-	const chats = [new UserHasChat(1, 1, 1), new UserHasChat(2, 2, 1)];
-	return chats.filter((c) => c.userId == userId);
+		new Chat(
+			1,
+			6,
+			'6 menssagem do chat 1 de f para g',
+			2,
+			new Date(),
+		),
+		new Chat(
+			1,
+			7,
+			'7 menssagem do chat 1 de g para f',
+			1,
+			new Date(),
+		),
+		new Chat(
+			1,
+			8,
+			'8 menssagem do chat 1 de g para f',
+			1,
+			new Date(),
+		),
+	];
+
+	const token = (await cookies()).get('Authorization')?.value;
+	return await fetch(
+		process.env.BACKEND_URL +
+			'/chats/users?userId=' +
+			usersId[0] +
+			'&friendId=' +
+			usersId[1],
+		{
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+				Authorization: token as string,
+			},
+		},
+	).then((j) => j.json());
+}
+export async function createChat(chat: ChatType) {
+	const token = (await cookies()).get('Authorization')?.value;
+	return await fetch(process.env.BACKEND_URL + '/chats', {
+		method: 'POST',
+		headers: {
+			'content-type': 'application/json',
+			Authorization: token as string,
+		},
+		body: JSON.stringify(chat),
+	});
 }
 export async function logoffHandler() {
 	await logoff();

@@ -3,4 +3,5 @@ export type UserType = {
 	username: string;
 	img: string;
 	password: string;
+	friends: number[];
 };

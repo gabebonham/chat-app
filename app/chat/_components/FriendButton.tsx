@@ -6,15 +6,27 @@ import AvatarComponent from './AvatarComponent';
 import { UserType } from '@/app/_types/UserType';
 export default function FriendButton({
 	friend,
-	handler,
+	userId,
+	chatHandler,
+	addFriendHandler,
 }: {
 	friend: UserType;
-	handler: (user: UserType) => void;
+	userId: any;
+	chatHandler: (user: UserType) => void;
+	addFriendHandler: (userId: number, friendId: number) => void;
 }) {
 	return (
 		<div className="">
 			<Button
-				onClick={(e) => handler(friend)}
+				onClick={
+					userId == null
+						? (e) => chatHandler(friend)
+						: (e) =>
+								addFriendHandler(
+									userId,
+									friend.id,
+								)
+				}
 				className="bg-white py-8 w-56 place-items-start"
 			>
 				<AvatarComponent
